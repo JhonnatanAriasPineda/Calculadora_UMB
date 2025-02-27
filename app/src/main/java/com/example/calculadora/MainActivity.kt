@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         fun calcular(b: View){
-            if(Double.NaN!primerNumero){
+            if(Double.NaN!=primerNumero){
                 segundoNumero = valor.text.toString().toDouble()
                 valor.text=""
 
