@@ -34,12 +34,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        
+
         formatoDecimal = DecimalFormat("#.##########")
         valor = findViewById(R.id.valor)
         resultado = findViewById(R.id.resultado)
 
         fun cambiarOperador(b:View){
+
             val boton:Button = b as Button
             if(boton.text.toString().trim()=="÷"){
                 operacionActual = "/"
@@ -48,10 +49,13 @@ class MainActivity : AppCompatActivity() {
             }else{
                 operacionActual = boton.text.toString().trim()
             }
+
+            resultado.text = formatoDecimal.format(primerNumero) + operacionActual
+            valor.text = ""
         }
 
-        fun calcular(b: View){
-            if(Double.NaN!=primerNumero){
+        fun calcular(){
+            if(primerNumero.toString()!="NaN"){
                 segundoNumero = valor.text.toString().toDouble()
                 valor.text=""
 
