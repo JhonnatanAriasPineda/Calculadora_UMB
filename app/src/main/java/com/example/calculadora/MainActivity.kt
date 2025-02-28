@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-
+        
         formatoDecimal = DecimalFormat("#.##########")
         valor = findViewById(R.id.valor)
         resultado = findViewById(R.id.resultado)
