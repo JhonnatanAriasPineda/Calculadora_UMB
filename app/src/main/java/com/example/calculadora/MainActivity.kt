@@ -3,6 +3,7 @@ package com.example.calculadora
 import android.icu.text.DecimalFormat
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -29,8 +30,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -41,10 +40,10 @@ class MainActivity : AppCompatActivity() {
         resultado = findViewById(R.id.resultado)
 
         fun cambiarOperador(b:View){
-            val boton:button = b as button
-            if(boton.text.toString().trim()="÷"){
+            val boton:Button = b as Button
+            if(boton.text.toString().trim()=="÷"){
                 operacionActual = "/"
-            }else if(boton.text.toString().trim()="x"){
+            }else if(boton.text.toString().trim()=="x"){
                 operacionActual = "*"
             }else{
                 operacionActual = boton.text.toString().trim()
@@ -56,10 +55,28 @@ class MainActivity : AppCompatActivity() {
                 segundoNumero = valor.text.toString().toDouble()
                 valor.text=""
 
-
+                when(operacionActual){
+                    "+" -> primerNumero = (primerNumero+segundoNumero)
+                    "-" -> primerNumero = (primerNumero-segundoNumero)
+                    "*" -> primerNumero = (primerNumero*segundoNumero)
+                    "/" -> primerNumero = (primerNumero/segundoNumero)
+                    "%" -> primerNumero = (primerNumero%segundoNumero)
+                }
+            }else{
+                primerNumero = valor.text.toString().toDouble()
             }
         }
 
+
+        fun seleccionarNumero(b: View){
+            val boton:Button = b as Button
+            if(valor.text.toString()=="0"){
+                valor.text = ""
+            }
+            valor.text = valor.text.toString() + boton.text.toString()
+
+
+        }
 
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

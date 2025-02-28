@@ -9,7 +9,7 @@
     tools:context=".MainActivity" >
 
     <TextView
-        android:id="@+id/Valor"
+        android:id="@+id/valor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
@@ -19,7 +19,7 @@
         android:textSize="34sp" />
 
     <TextView
-        android:id="@+id/Resultado"
+        android:id="@+id/resultado"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
