@@ -35,29 +35,27 @@ class MainActivity : AppCompatActivity() {
         valor = findViewById(R.id.valor)
         resultado = findViewById(R.id.resultado)
 
-        // Enlazar botones numéricos con la función seleccionarNumero
         val botonesNumeros = listOf(
-            R.id.btn0, R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4,
-            R.id.btn5, R.id.btn6, R.id.btn7, R.id.btn8, R.id.btn9
+            R.id.button0, R.id.button1, R.id.button2, R.id.button3, R.id.button4,
+            R.id.button5, R.id.button6, R.id.button7, R.id.button8, R.id.button9
         )
 
         for (id in botonesNumeros) {
             findViewById<Button>(id).setOnClickListener { seleccionarNumero(it) }
         }
 
-        // Enlazar botones de operaciones con la función cambiarOperador
         val botonesOperaciones = listOf(
-            R.id.btnSuma, R.id.btnResta, R.id.btnMultiplicacion, R.id.btnDivision, R.id.btnPorcentaje
+            R.id.buttonSuma, R.id.buttonResta, R.id.buttonX, R.id.buttonDiv, R.id.buttonPor
         )
 
         for (id in botonesOperaciones) {
             findViewById<Button>(id).setOnClickListener { cambiarOperador(it) }
         }
 
-        // Botón igual para calcular
-        findViewById<Button>(R.id.btnIgual).setOnClickListener { calcular() }
+        findViewById<Button>(R.id.buttonIgual).setOnClickListener { calcular() }
+        findViewById<Button>(R.id.buttonC).setOnClickListener { borrarActual() }
+        findViewById<Button>(R.id.buttonCA).setOnClickListener { reiniciarCalculadora() }
 
-        // Configurar los insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -67,6 +65,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun cambiarOperador(b: View) {
         val boton: Button = b as Button
+
+        if (valor.text.isNotEmpty()) {
+            primerNumero = valor.text.toString().toDouble()
+        }
+
         operacionActual = when (boton.text.toString().trim()) {
             "÷" -> "/"
             "x" -> "*"
@@ -78,7 +81,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun calcular() {
-        if (!primerNumero.isNaN()) {
+        if (valor.text.isNotEmpty()) {
             segundoNumero = valor.text.toString().toDouble()
             valor.text = ""
 
@@ -86,12 +89,10 @@ class MainActivity : AppCompatActivity() {
                 "+" -> primerNumero += segundoNumero
                 "-" -> primerNumero -= segundoNumero
                 "*" -> primerNumero *= segundoNumero
-                "/" -> primerNumero /= segundoNumero
+                "/" -> if (segundoNumero != 0.0) primerNumero /= segundoNumero
                 "%" -> primerNumero %= segundoNumero
             }
             resultado.text = formatoDecimal.format(primerNumero)
-        } else {
-            primerNumero = valor.text.toString().toDouble()
         }
     }
 
@@ -101,5 +102,17 @@ class MainActivity : AppCompatActivity() {
             valor.text = ""
         }
         valor.text = valor.text.toString() + boton.text.toString()
+    }
+
+    private fun borrarActual() {
+        valor.text = ""
+    }
+
+    private fun reiniciarCalculadora() {
+        primerNumero = Double.NaN
+        segundoNumero = Double.NaN
+        operacionActual = ""
+        valor.text = ""
+        resultado.text = ""
     }
 }
